@@ -16,6 +16,12 @@
     "status": "enum - 대기열 상태"
   }
 ```
+- Error
+
+| Code          | Message    |
+|---------------|------------|
+| INVALID_TOKEN | 유효하지 않은 토큰 |
+| INTERNAL_SERVER_ERROR | 토큰 체크 실패 |
 
 ## GET /concerts - 콘서트 조회
 
@@ -43,6 +49,7 @@
 | Code          | Message    |
 |---------------|------------|
 | INVALID_TOKEN | 유효하지 않은 토큰 |
+| INTERNAL_SERVER_ERROR | 토큰 체크 실패   |
 
 ## GET /concerts/{concertId}/schedules - 콘서트 예약가능 날짜 조회 API
 
@@ -70,6 +77,7 @@
 | Code          | Message    |
 |---------------|------------|
 | INVALID_TOKEN | 유효하지 않은 토큰 |
+| INTERNAL_SERVER_ERROR | 토큰 체크 실패   |
 
 ## GET /concerts/{concertId}/schedules/{concertScheduleId}/seats - 예약 가능 좌석 조회
 
@@ -97,6 +105,7 @@
 | Code          | Message    |
 |---------------|------------|
 | INVALID_TOKEN | 유효하지 않은 토큰 |
+| INTERNAL_SERVER_ERROR | 토큰 체크 실패   |
 
 ## POST /reservations - 좌석 예약
 
@@ -126,15 +135,16 @@
 
 | Code          | Message    |
 |---------------|------------|
-| INVALID_TOKEN | 유효하지 않은 토큰 |
 | INVALID_SEAT  | 유효하지 않은 좌석 |
+| FAIL_CHECK_SEAT  | 좌석 체크 실패 |
+| INVALID_TOKEN | 유효하지 않은 토큰 |
+| INTERNAL_SERVER_ERROR | 토큰 체크 실패   |
+
 
 ## GET /users/{userId}/amount - 잔액 조회
 
 - Description
     - 잔액 조회
-- Header
-    - token: 대기열 토큰
 - PathVariable
     - userId: 사용자 Id
 - Response
@@ -145,16 +155,15 @@
   ```
 - Error
 
-| Code          | Message    |
-|---------------|------------|
-| INVALID_TOKEN | 유효하지 않은 토큰 |
+| Code         | Message     |
+|--------------|-------------|
+| INVALID_USER | 유효하지 않은 유저  |
+| INTERNAL_SERVER_ERROR | 유저 잔액 체크 실패 |
 
 ## PATCH /users/{userId}/charge - 잔액 충전
 
 - Description
     - 잔액 충전
-- Header
-    - token: 대기열 토큰
 - PathVariable
     - userId: 사용자 Id
 - Request Body
@@ -173,7 +182,8 @@
 
 | Code          | Message    |
 |---------------|------------|
-| INVALID_TOKEN | 유효하지 않은 토큰 |
+| INVALID_USER | 유효하지 않은 유저  |
+| INTERNAL_SERVER_ERROR | 유저 잔액 체크 실패 |
 
 ## POST /reservation/payment - 결제
 
@@ -199,8 +209,9 @@
   ```
 - Error
 
-| Code              | Message    |
-|-------------------|------------|
-| INVALID_TOKEN     | 유효하지 않은 토큰 |
-| INVALID_SEAT      | 유효하지 않은 좌석 |
-| NOT_ENOUGH_AMOUNT | 잔액 부족      |
+| Code                   | Message    |
+|------------------------|------------|
+| INVALID_TOKEN          | 유효하지 않은 토큰 |
+| INVALID_SEAT           | 유효하지 않은 좌석 |
+| FAIL_CHECK_RESERVATION | 예약 체크 실패   |
+| NOT_ENOUGH_AMOUNT      | 잔액 부족      |

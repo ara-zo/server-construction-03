@@ -1,20 +1,35 @@
 package io.hhplus.serverconstruction.interfaces.waiting
 
+import io.hhplus.serverconstruction.application.waiting.facade.WaitingFacade
 import io.hhplus.serverconstruction.domain.waiting.WaitingType
 import io.hhplus.serverconstruction.interfaces.error.dto.ErrorDto
 import io.hhplus.serverconstruction.interfaces.waiting.dto.CheckWaitingDto
+import io.hhplus.serverconstruction.interfaces.waiting.dto.IssueTokenDto
 import io.swagger.v3.oas.annotations.headers.Header
 import lombok.RequiredArgsConstructor
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestHeader
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/waiting")
-class WaitingController {
+class WaitingController(
+    private val waitingFacade: WaitingFacade
+) {
+
+    /**
+     * 토큰 발급
+     */
+    @PostMapping
+    fun tokenIssue(): ResponseEntity<IssueTokenDto> {
+        val token = waitingFacade.tokenIssue()
+        return ResponseEntity.ok(
+            IssueTokenDto(
+                token = token.token,
+                status = token.status
+            )
+        )
+    }
 
     @GetMapping("/check")
     fun check(

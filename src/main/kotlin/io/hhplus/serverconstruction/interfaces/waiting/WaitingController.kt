@@ -2,11 +2,7 @@ package io.hhplus.serverconstruction.interfaces.waiting
 
 import io.hhplus.serverconstruction.application.waiting.dto.CheckTokenResult
 import io.hhplus.serverconstruction.application.waiting.facade.WaitingFacade
-import io.hhplus.serverconstruction.domain.waiting.WaitingType
-import io.hhplus.serverconstruction.interfaces.error.dto.ErrorDto
-import io.hhplus.serverconstruction.interfaces.waiting.dto.CheckWaitingDto
 import io.hhplus.serverconstruction.interfaces.waiting.dto.IssueTokenDto
-import io.swagger.v3.oas.annotations.headers.Header
 import lombok.RequiredArgsConstructor
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*

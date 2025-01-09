@@ -17,7 +17,7 @@ class ConcertEntity(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     @Comment("콘서트 Id")
-    val id: Long? = null,
+    val id: Long? = 0,
 
     @Comment("콘서트명")
     val name: String,
@@ -35,9 +35,9 @@ class ConcertEntity(
     val reservationEndTime: LocalDateTime,
 
     @Comment("콘서트 시작 날짜")
-    val concertStartTime: LocalDateTime,
+    val concertStartDate: LocalDateTime,
 
     @Comment("콘서트 종료 날짜")
-    val concertEndTime: LocalDateTime
+    val concertEndDate: LocalDateTime
 
 ) : BaseEntity()

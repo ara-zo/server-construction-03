@@ -35,3 +35,26 @@ VALUES ('홍길동1', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP()),
        ('홍길동14', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP()),
        ('홍길동15', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP()),
        ('홍길동16', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP());
+
+
+INSERT INTO concert.concert (
+    concert_end_time,
+    concert_start_time,
+    create_date,
+    reservation_end_time,
+    reservation_start_time,
+    update_date,
+    location,
+    name,
+    singer
+) VALUES (
+             '2025-01-15 20:00:00.000000',  -- 콘서트 종료 날짜
+             '2025-01-15 18:00:00.000000',  -- 콘서트 시작 날짜
+             NOW(),                         -- 생성일시
+             '2025-01-10 23:59:59.000000',  -- 예약 가능 종료 일시
+             '2025-01-01 00:00:00.000000',  -- 예약 가능 시작 일시
+             NOW(),                         -- 수정일시
+             'Seoul Olympic Park',          -- 장소
+             'Winter Jazz Festival',        -- 콘서트명
+             'John Doe Band'                -- 가수
+         );

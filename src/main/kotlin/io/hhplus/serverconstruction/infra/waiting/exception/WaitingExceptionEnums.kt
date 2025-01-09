@@ -9,7 +9,7 @@ enum class WaitingExceptionEnums(
     override val message: String
 ) : ExceptionInterface {
 
-    TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED, "TOKEN_EXPIRED", "expired token."),
-    EMPTY_TOKEN(HttpStatus.BAD_REQUEST, "EMPTY_TOKEN", "Token is empty.");
+    TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED, "TOKEN_EXPIRED", "만료된 토큰"),
+    EMPTY_TOKEN(HttpStatus.BAD_REQUEST, "EMPTY_TOKEN", "유효하지 않는 토큰");
 
 }

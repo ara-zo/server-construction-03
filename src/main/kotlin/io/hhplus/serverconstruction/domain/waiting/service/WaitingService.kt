@@ -11,7 +11,7 @@ import java.time.LocalDateTime
 
 @Service
 @RequiredArgsConstructor
-class WaitingService (
+class WaitingService(
     private val waitingRepository: WaitingRepository
 ) {
     /**
@@ -26,6 +26,7 @@ class WaitingService (
      */
     fun findToken(token: String): Waiting {
         val waiting = waitingRepository.findWaitingByToken(token)
+            ?: throw WaitingException(WaitingExceptionEnums.EMPTY_TOKEN)
 
         // 만료시
         if (WaitingType.EXPIRE == waiting.status) {
@@ -54,6 +55,7 @@ class WaitingService (
      */
     fun updateWaitingTypeProcess(token: String) {
         val waiting = waitingRepository.findWaitingByToken(token)
+            ?: throw WaitingException(WaitingExceptionEnums.EMPTY_TOKEN)
 
         // 만료시
         if (WaitingType.EXPIRE == waiting.status) {
@@ -68,6 +70,7 @@ class WaitingService (
      */
     fun updateWaitingType(token: String) {
         val waiting = waitingRepository.findWaitingByToken(token)
+            ?: throw WaitingException(WaitingExceptionEnums.EMPTY_TOKEN)
 
         if (LocalDateTime.now() < waiting.expiredDate) {
             waitingRepository.save(waiting.expireToken())

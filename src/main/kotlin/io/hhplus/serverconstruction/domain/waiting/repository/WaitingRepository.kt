@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 interface WaitingRepository {
     fun save(waiting: Waiting): Waiting
 
-    fun findWaitingByToken(waitingToken: String): Waiting
+    fun findWaitingByToken(waitingToken: String): Waiting?
 
     fun findFirstByStatusOrderByIdDesc(status: WaitingType): Waiting?
 

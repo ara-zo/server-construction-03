@@ -17,8 +17,12 @@ class WaitingRepositoryImpl(
         return WaitingMapper.toDomain(waitingJpaRepository.save(WaitingMapper.toEntity(waiting)))
     }
 
-    override fun findWaitingByToken(waitingToken: String): Waiting {
-        return WaitingMapper.toDomain(waitingJpaRepository.findByToken(waitingToken))
+    override fun findWaitingByToken(waitingToken: String): Waiting? {
+        val waiting = waitingJpaRepository.findByToken(waitingToken)
+        return when (waiting) {
+            null -> null
+            else -> WaitingMapper.toDomain(waiting)
+        }
     }
 
     override fun findFirstByStatusOrderByIdDesc(status: WaitingType): Waiting? {

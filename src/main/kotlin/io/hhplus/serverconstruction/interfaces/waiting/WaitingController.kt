@@ -1,5 +1,6 @@
 package io.hhplus.serverconstruction.interfaces.waiting
 
+import io.hhplus.serverconstruction.application.waiting.dto.CheckTokenResult
 import io.hhplus.serverconstruction.application.waiting.facade.WaitingFacade
 import io.hhplus.serverconstruction.domain.waiting.WaitingType
 import io.hhplus.serverconstruction.interfaces.error.dto.ErrorDto
@@ -34,35 +35,10 @@ class WaitingController(
     @GetMapping("/check")
     fun check(
         @RequestHeader("token") token: String,
-    ): Any {
+    ): ResponseEntity<CheckTokenResult> {
 
-        return when (token) {
-            "valid_token" -> {
-                ResponseEntity.ok(
-                    CheckWaitingDto(
-                        token = "test1234",
-                        status = WaitingType.PROCESS
-                    )
-                )
-            }
-
-            "invalid_token" -> {
-                ResponseEntity.badRequest().body(
-                    ErrorDto(
-                        "INVALID_TOKEN",
-                        "유효하지 않은 토큰"
-                    )
-                )
-            }
-
-            else -> {
-                ResponseEntity.internalServerError().body(
-                    ErrorDto(
-                        "INTERNAL_SERVER_ERROR",
-                        "토큰 체크 실패"
-                    )
-                )
-            }
-        }
+        return ResponseEntity.ok(
+            waitingFacade.checkToken(token)
+        )
     }
 }

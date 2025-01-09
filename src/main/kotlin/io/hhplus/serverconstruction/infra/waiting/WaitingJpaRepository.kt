@@ -9,7 +9,7 @@ import java.time.LocalDateTime
 
 
 interface WaitingJpaRepository : JpaRepository<WaitingEntity, Long> {
-    fun findByToken(token: String): WaitingEntity
+    fun findByToken(token: String): WaitingEntity?
 
     fun findFirstByStatusOrderByIdDesc(status: WaitingType): WaitingEntity
 

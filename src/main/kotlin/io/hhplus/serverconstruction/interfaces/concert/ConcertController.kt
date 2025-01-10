@@ -1,7 +1,10 @@
 package io.hhplus.serverconstruction.interfaces.concert
 
+import io.hhplus.serverconstruction.application.concert.facade.ConcertFacade
+import io.hhplus.serverconstruction.domain.concert.Concert
 import io.hhplus.serverconstruction.domain.concert.ConcertGradeType
 import io.hhplus.serverconstruction.domain.concert.ConcertSeatStatusType
+import io.hhplus.serverconstruction.domain.concert.service.ConcertService
 import io.hhplus.serverconstruction.interfaces.concert.dto.ConcertListDto
 import io.hhplus.serverconstruction.interfaces.concert.dto.ConcertScheduleDto
 import io.hhplus.serverconstruction.interfaces.concert.dto.ConcertSeatListDto
@@ -15,56 +18,17 @@ import java.time.LocalDateTime
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/concerts")
-class ConcertController {
+class ConcertController(
+    private val concertFacade: ConcertFacade,
+) {
 
     @GetMapping
     fun findConcertList(
         @RequestHeader("token") token: String,
-    ): ResponseEntity<Any> {
-        val list = listOf(
-            ConcertListDto(
-                concertId = 1L,
-                name = "홍길동의 TDD 콘서트",
-                singer = "홍길동",
-                location = "코엑스",
-                reservationStartDate = LocalDateTime.of(2024, 12, 28, 13, 0, 0),
-                reservationEndDate = LocalDateTime.of(2024, 12, 29, 13, 0, 0),
-                concertStartDate = LocalDateTime.of(2025, 1, 2,  13, 0, 0),
-                concertEndDate = LocalDateTime.of(2025, 1, 2, 14, 0, 0)
-            ),
-            ConcertListDto(
-                concertId = 2L,
-                name = "홍길동의 클린아키텍쳐 콘서트",
-                singer = "홍길동",
-                location = "코엑스",
-                reservationStartDate = LocalDateTime.of(2024, 12, 28, 13, 0, 0),
-                reservationEndDate = LocalDateTime.of(2024, 12, 29, 13, 0, 0),
-                concertStartDate = LocalDateTime.of(2025, 1, 2,  13, 0, 0),
-                concertEndDate = LocalDateTime.of(2025, 1, 2, 14, 0, 0)
-            )
+    ): ResponseEntity<List<ConcertListDto?>> {
+        return ResponseEntity.ok(
+            concertFacade.findAllConcerts(token)
         )
-
-        return when(token) {
-            "valid_token" -> ResponseEntity.ok(list)
-
-            "invalid_token" -> {
-                ResponseEntity.badRequest().body(
-                    ErrorDto(
-                        "INVALID_TOKEN",
-                        "유효하지 않은 토큰"
-                    )
-                )
-            }
-
-            else -> {
-                ResponseEntity.internalServerError().body(
-                    ErrorDto(
-                        "INTERNAL_SERVER_ERROR",
-                        "토큰 체크 실패"
-                    )
-                )
-            }
-        }
     }
 
     @GetMapping("/{concertId}/schedules")
